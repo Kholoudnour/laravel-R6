@@ -1,0 +1,1 @@
+data received successfully<?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/laravel-R6/resources/views/logincheck.blade.php ENDPATH**/ ?>
