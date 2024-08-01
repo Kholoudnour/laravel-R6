@@ -43,15 +43,28 @@ class ClassesController extends Controller
         //     'capacity'=> 30, 
         //     'isfulled'=> true,
         //     'price'=> 1000,
-        Classtop::create([
-            'classname' =>$request ->classname, 
-            'price' =>$request -> price, 
-            'capacity'=>$request ->capacity,
-            'isfulled'=>isset($request->isfulled),
-            'timefrom' =>$request ->timefrom, 
-            'timeto'=>$request ->timeto,
-        ]);
-            return "Data Added Successfuly";
+        // Classtop::create([
+        //     'classname' =>$request ->classname, 
+        //     'price' =>$request -> price, 
+        //     'capacity'=>$request ->capacity,
+        //     'isfulled'=>isset($request->isfulled),
+        //     'timefrom' =>$request ->timefrom, 
+        //     'timeto'=>$request ->timeto,
+        // ]);
+        //     return "Data Added Successfuly";
+            $data = $request -> validate([
+                'classname' => 'required|string', 
+                'price' => 'required|numeric', 
+                'capacity' => 'required|string|max:1000',
+                'timefrom' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/', 
+                'timeto' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/',
+            
+                ]);
+            
+                
+            dd($request);
+                $data['published'] = isset ($request->published);
+                classtop::create($data);
     }
 
     /**
@@ -80,17 +93,30 @@ class ClassesController extends Controller
     public function update(Request $request, string $id)
     {
  //   dd($request, $id);
-            $data = [
+            // $data = [
   
-            'classname' =>$request ->classname, 
-            'price' =>$request -> price, 
-            'capacity'=>$request ->capacity,
-            'isfulled'=>isset($request->isfulled),
-            'timefrom' =>$request ->timefrom, 
-            'timeto'=>$request ->timeto,
-                ];
-            classtop::where('id', $id)->update($data);  
-            return "Data Added Successfuly";
+            // 'classname' =>$request ->classname, 
+            // 'price' =>$request -> price, 
+            // 'capacity'=>$request ->capacity,
+            // 'isfulled'=>isset($request->isfulled),
+            // 'timefrom' =>$request ->timefrom, 
+            // 'timeto'=>$request ->timeto,
+            //     ];
+            // classtop::where('id', $id)->update($data);  
+            // return "Data Added Successfuly";
+            $data = $request -> validate([
+                'classname' => 'required|string', 
+                'price' => 'required|numeric', 
+                'capacity' => 'required|string|max:1000',
+                'timefrom' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/', 
+                'timeto' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/',
+            
+                 ]);
+              
+                 
+            // dd($request);
+                 $data['published'] = isset ($request->published);
+                 classtop::create($data);
           }
 
     /**
@@ -108,4 +134,13 @@ class ClassesController extends Controller
             $classes = classtop::onlyTrashed()->get();
             return view('trashed_classes', compact('classes'));
         }
+        public function restore(string $id) {
+            Classtop::where('id', $id)->restore();
+            return redirect()->route('class.index');
+        }
+        public function forcedelete(string $id) {
+            Classtop::where('id', $id)->forcedelete();
+            return redirect()->route('class.index');
+        }
+         
 }

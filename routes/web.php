@@ -162,6 +162,9 @@ Route::get('Classes/{id}/delete', [ClassesController::class, 'destroy'])->name('
 Route::get('Classes/trashed', [ClassesController::class, 'showdeleted'])->name('class.showdeleted');
 Route::delete('delete', [classesController::class,'destroy'])->name('class.delete');
 
+Route::patch('classes/{id}', [ClassesController::class, 'restore'])->name('class.restore');
+Route::delete('classes/{id}', [ClassesController::class, 'forcedelete'])->name('class.forcedelete');
+
 Route:: prefix('cars')->group(function(){
 Route::get('', [CarController::class, 'index'])->name('cars.index');
 Route::get('create', [CarController::class, 'create'])->name('cars.create');

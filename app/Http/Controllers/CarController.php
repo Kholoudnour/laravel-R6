@@ -37,16 +37,16 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        // $data = $request -> validate([
-        //     'carTitle' => 'required|string', 
-        //     'description' => 'required|string|max:1000',
-        //     'price' => 'required|numaric', 
+        $data = $request -> validate([
+            'carTitle' => 'required|string', 
+            'description' => 'required|string|max:1000',
+            'price' => 'required|numeric', 
         
-        //      ]);
+             ]);
           
         // dd($request);
-        //      $data['published'] = isset ($request->published);
-        //      car::create($data);
+             $data['published'] = isset ($request->published);
+             car::create($data);
             }        
 
     /**

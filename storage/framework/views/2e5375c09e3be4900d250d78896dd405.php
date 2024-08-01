@@ -1,1 +1,0 @@
-DATA RECEIVED<?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/laravel-R6/resources/views/logged.blade.php ENDPATH**/ ?>

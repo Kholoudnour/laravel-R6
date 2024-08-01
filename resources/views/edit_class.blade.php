@@ -43,19 +43,20 @@
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Capacity:</label>
             <div class="col-md-10">
-              <textarea id="" cols="30" rows="5" class="form-control py-2" name="capacity">{{$class->capacity}}</textarea>
+              <input type="number" step="1" placeholder="Enter Capacity" class="form-control py-2"name="capacity"value="{{$class->capacity}}" />
             </div>
-  
+          </div>
             <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Timefrom:</label>
             <div class="col-md-10">
-              <input type="time"  placeholder="Time From" class="form-control py-2"name="timefrom"{{$class->timefrom}}
-            </div>
+              <input type="time"  placeholder="Time From" class="form-control py-2"name="timefrom" value="{{$class->timefrom}}"/>
+            </div> 
+           
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Timeto:</label>
             <div class="col-md-10">
-              <input type="time"  placeholder="Time to" class="form-control py-2"name="timeto"{{$class->timeto}}
+              <input type="time"  placeholder="Time to" class="form-control py-2"name="timeto" value="{{$class->timeto}}"/>
           </div>
           </div>
           <hr>
