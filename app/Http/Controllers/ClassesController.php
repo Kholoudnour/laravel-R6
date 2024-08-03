@@ -65,6 +65,7 @@ class ClassesController extends Controller
             dd($request);
                 $data['published'] = isset ($request->published);
                 classtop::create($data);
+                   return "Data Added Successfuly";
     }
 
     /**
@@ -83,6 +84,7 @@ class ClassesController extends Controller
     {
         $class = Classtop::findorfail($id);
         return  view('edit_class', compact('class'));
+         return "Data Added Successfuly";
     }
 
     
@@ -117,6 +119,7 @@ class ClassesController extends Controller
             // dd($request);
                  $data['published'] = isset ($request->published);
                  classtop::create($data);
+                  return "Data Added Successfuly";
           }
 
     /**

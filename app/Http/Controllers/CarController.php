@@ -47,6 +47,7 @@ class CarController extends Controller
         // dd($request);
              $data['published'] = isset ($request->published);
              car::create($data);
+               return "Data Added Successfuly";
             }        
 
     /**
@@ -73,14 +74,26 @@ class CarController extends Controller
     public function update(Request $request, string $id)
     {
     //   dd($request, $id);
-    $data = [
+    
+    $data = $request -> validate([
+        'carTitle' => 'required|string', 
+        'description' => 'required|string|max:1000',
+        'price' => 'required|numeric', 
+    
+         ]);
+      
+    // dd($request);
+         $data['published'] = isset ($request->published);
+         car::create($data);
+           return "Data Added Successfuly";
+    // $data = [
         
-            'cartitle' =>$request ->title, 
-            'price' =>$request -> price, 
-            'description'=>$request ->description,
-            'published'=>isset($request->published),
-    ];
-    car::where('id', $id)->update($data);
+    //         'cartitle' =>$request ->title, 
+    //         'price' =>$request -> price, 
+    //         'description'=>$request ->description,
+    //         'published'=>isset($request->published),
+    // ];
+    // car::where('id', $id)->update($data);
    
     }
     /**

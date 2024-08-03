@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClassesController;
+use App\Http\Controllers\ExampleController;
 
 Route::get('/', function () {
   return view('welcome');
@@ -182,3 +183,5 @@ Route::delete('{id}', [CarController::class, 'forcedelete'])->name('cars.forcede
 // Route::resource('cars', CarController::class);
 
 });
+Route::get('uploadform', [ExampleController::class, 'uploadform']);
+Route::post('uploadform', [ExampleController::class, 'upload'])->name('uploadform');

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Example extends Controller
+class ExampleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -60,5 +60,15 @@ class Example extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    function uploadform(){
+        return view ('upload');
+    }
+    public function upload(Request $request){
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        return 'Uploaded';
     }
 }
