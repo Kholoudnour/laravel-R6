@@ -56,16 +56,25 @@ class ClassesController extends Controller
                 'classname' => 'required|string', 
                 'price' => 'required|numeric', 
                 'capacity' => 'required|string|max:1000',
-                'timefrom' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/', 
-                'timeto' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/',
+                'timefrom' =>'required', 
+                'timeto' =>'required',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             
                 ]);
             
+                $file_extension = $request->image->getClientOriginalExtension();
+                $file_name = time() . '.' . $file_extension;
+                $path = 'assets/images';
+                $request->image->move($path, $file_name);
+                // return 'Uploaded'; 
+            // dd($request);
+                $data['image'] = $file_name;
                 
-            dd($request);
-                $data['published'] = isset ($request->published);
+                $data['isfulled'] = isset ($request->isfulled);
                 classtop::create($data);
                    return "Data Added Successfuly";
+                // return redirect()->route('class.index');
+                   
     }
 
     /**
@@ -74,7 +83,10 @@ class ClassesController extends Controller
     public function show(string $id)
     {
         $class = Classtop::findOrFail($id);
+        $class-> image = 'assets/images/' .  $class->image; 
         return  view('class_detail', compact('class')); 
+        //  $path = 'assets/images';
+
        }
 
     /**
@@ -106,14 +118,14 @@ class ClassesController extends Controller
             //     ];
             // classtop::where('id', $id)->update($data);  
             // return "Data Added Successfuly";
-            $data = $request -> validate([
-                'classname' => 'required|string', 
-                'price' => 'required|numeric', 
+            $data = $request->validate([
+                'classname' => 'required|string',
+                'price' => 'required|numeric',
                 'capacity' => 'required|string|max:1000',
-                'timefrom' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/', 
-                'timeto' =>'required|regex:/^([01][0-9]|2[0-3]):([0-5][0-9])$/',
-            
-                 ]);
+                'timefrom' => 'required|time',
+                'timeto' => 'required|time',
+                
+            ]);
               
                  
             // dd($request);
@@ -144,6 +156,6 @@ class ClassesController extends Controller
         public function forcedelete(string $id) {
             Classtop::where('id', $id)->forcedelete();
             return redirect()->route('class.index');
+        
         }
-         
-}
+    }

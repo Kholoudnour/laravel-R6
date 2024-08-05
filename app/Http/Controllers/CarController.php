@@ -41,8 +41,16 @@ class CarController extends Controller
             'carTitle' => 'required|string', 
             'description' => 'required|string|max:1000',
             'price' => 'required|numeric', 
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
         
              ]);
+             $file_extension = $request->image->getClientOriginalExtension();
+             $file_name = time() . '.' . $file_extension;
+             $path = 'assets/images';
+             $request->image->move($path, $file_name);
+             // return 'Uploaded'; 
+         // dd($request);
+             $data['image'] = $file_name;
           
         // dd($request);
              $data['published'] = isset ($request->published);
@@ -56,6 +64,7 @@ class CarController extends Controller
     public function show(string $id)
     {
         $car = Car::findOrFail($id);
+        $car-> image = 'assets/images/' .  $car->image; 
         return  view('car_detail', compact('car'));
     }
 

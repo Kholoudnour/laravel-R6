@@ -14,13 +14,15 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('classname', 100);
-            $table->float('capacity');
+            $table->integer('capacity');
             $table->boolean('isfulled');
             $table->float('price');
             $table->time('timefrom');
             $table->time('timeto');
+            $table->string('image');
             $table->timestamps();
             $table->softDeletes();
+         
         });
     }
 

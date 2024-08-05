@@ -18,5 +18,6 @@ protected $table = 'classes';
         'price', 
         'timefrom', 
         'timeto', 
+        'image', 
     ];
 }
