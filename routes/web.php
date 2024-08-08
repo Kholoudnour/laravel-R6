@@ -185,3 +185,7 @@ Route::delete('{id}', [CarController::class, 'forcedelete'])->name('cars.forcede
 });
 Route::get('uploadform', [ExampleController::class, 'uploadform']);
 Route::post('uploadform', [ExampleController::class, 'upload'])->name('uploadform');
+
+Route::get('index', [ExampleController::class, 'index']);
+Route::get('product/create', [ExampleController::class, 'create'])->name('product.create');
+Route::post('product', [ExampleController::class, 'store'])->name('product.store');

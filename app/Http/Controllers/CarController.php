@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\car;
+use App\trait\Commmon;
+use App\Trait\Common;
 
 class CarController extends Controller
 {
@@ -12,7 +14,7 @@ class CarController extends Controller
      */
 
   
-   
+   use Common;
 
 
     public function index()
@@ -44,16 +46,17 @@ class CarController extends Controller
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
         
              ]);
-             $file_extension = $request->image->getClientOriginalExtension();
-             $file_name = time() . '.' . $file_extension;
-             $path = 'assets/images';
-             $request->image->move($path, $file_name);
-             // return 'Uploaded'; 
-         // dd($request);
-             $data['image'] = $file_name;
+        //      $file_extension = $request->image->getClientOriginalExtension();
+        //      $file_name = time() . '.' . $file_extension;
+        //      $path = 'assets/images';
+        //      $request->image->move($path, $file_name);
+        //      // return 'Uploaded'; 
+        //  // dd($request);
+        //      $data['image'] = $file_name;
           
         // dd($request);
              $data['published'] = isset ($request->published);
+             $data['image']=$this->uploadFile($request->image, 'assets/images');
              car::create($data);
                return "Data Added Successfuly";
             }        
@@ -64,7 +67,7 @@ class CarController extends Controller
     public function show(string $id)
     {
         $car = Car::findOrFail($id);
-        $car-> image = 'assets/images/' .  $car->image; 
+    
         return  view('car_detail', compact('car'));
     }
 
@@ -93,7 +96,8 @@ class CarController extends Controller
       
     // dd($request);
          $data['published'] = isset ($request->published);
-         car::create($data);
+         $data['image']=$this->uploadFile($request->image, 'assets/images');
+         car::where('id', $id)->update($data);
            return "Data Added Successfuly";
     // $data = [
         

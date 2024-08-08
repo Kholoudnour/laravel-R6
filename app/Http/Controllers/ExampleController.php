@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Trait\Common;
 
-class ExampleController extends Controller
+
+
+class ExampleController extends Controller 
+
 {
+    use Common;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('created_at', 'desc')->take(3)->get();
+        return view('index', compact('products'));
+
+
     }
 
     /**
@@ -19,7 +28,9 @@ class ExampleController extends Controller
      */
     public function create()
     {
-        //
+            return view('add_product');
+            return "Data Added Successfuly";
+
     }
 
     /**
@@ -27,8 +38,19 @@ class ExampleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request -> validate([
+    'title' => 'required|string', 
+    'description' => 'required|string|max:1000',
+    'price' => 'required|numeric', 
+    'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+
+     ]);
+
+     $data['published'] = isset ($request->published);
+     $data['image']=$this->uploadFile($request->image, 'assets/images');
+     product::create($data);
+       return "Data Added Successfuly";
+     }
 
     /**
      * Display the specified resource.
@@ -71,4 +93,10 @@ class ExampleController extends Controller
         $request->image->move($path, $file_name);
         return 'Uploaded';
     }
-}
+
+
+
+    }
+
+
+
